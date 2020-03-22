@@ -45,14 +45,17 @@ def main():
 	# Create cursor
 	cursor = connection.cursor()
 
-	# Insert DataFrame recrds one by one.
+	# Insert DataFrame records one by one.
 	for i, row in df['Sheet1'].iterrows():
 		sql = 'INSERT INTO `'+table+'` (`'+cols +'`) VALUES ('+'%s,'*(len(row)-1)+'%s)'
 		# row represents the data points in DataFrame
+		# print(sql % tuple_data)
 		cursor.execute(sql, tuple(row))
 		
 		# The connection is not autocommitted by default, so we must commit to save our changes
 		connection.commit()
+
+	connection.close()
 
 if __name__ == '__main__':
 	main()
